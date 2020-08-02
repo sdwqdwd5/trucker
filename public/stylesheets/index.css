@@ -1,0 +1,27 @@
+body{
+    font-size: 12px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.jumbotron{
+    background-image: url(https://i.ibb.co/WzFmngY/MAN-Truck-Platooning.jpg);
+    background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  height: 37em;
+  color: black;
+  -webkit-text-stroke: 0.09em whitesmoke
+}
+
+.h1, h1{
+    font-weight: 800;
+    font-size:6em;
+}
+#Jdescription{
+    color: darkslategray;
+    -webkit-text-stroke: 0.02em whitesmoke;
+    font-weight: 800;
+
+    font-size:2.1em;
+}
+
