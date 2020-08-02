@@ -1,0 +1,25 @@
+<%- include("partials/header")%>
+<div class="container">
+	<div class="row justify-content-center">
+		<h1 class="col-12" style="text-align: center">Create a new truck</h1>
+		<div class="col-3"></div>
+		<div class="col-6 " style="width: 30% ;margin:10px auto">
+				<form action="/trucks" method="POST">
+					<div class= "form-group">
+						<input class="form-control" type="text" placeholder="name" name="name">
+					</div>
+					<div class= "form-group">
+						<input class="form-control" type="text" placeholder="image url" name="image">
+					</div>
+					<div class= "form-group">
+						<button class="btn btn-xl btn-primary btn-block ">submit</button>
+					</div>
+				</form>
+		</div>
+		<div class="col-3"></div>
+		<div class="col-3"></div>
+		<a href="/trucks" class="col-6">Go back</a>
+		<div class="col-3"></div>
+		</div>
+</div>
+<%- include("partials/footer")%>

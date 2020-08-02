@@ -1,0 +1,31 @@
+<%- include("partials/header.ejs")%>
+	
+
+
+
+<div class="container">
+	<header class="jumbotron">
+		<div class = "container">
+			<h1>Welcome to Truck sharing!!</h1>
+			<p>Share or view these amazing trucks!</p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="/trucks/new">add new truck</a>
+			</p>
+		</div>
+	</header>
+	
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+		<% trucks.forEach(function(truck){ %>
+			<div class="col-lg-3 col-md-6 col-12">
+				<div class="img-thumbnail">			
+					<img src="<%= truck.image%>" style="width:100%">
+					<div class="caption">
+						<%= truck.name %>
+					</div>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>
+	
+<%- include("partials/footer.ejs")%>
