@@ -1,22 +1,16 @@
 {
   "name": "truck_sharing",
   "version": "1.0.0",
-  "description": "a truck sharing website application",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "repository": {
-  
-  },
-  "author": "Chia-Hao Chan",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sdwqdwd5/truck_sharing/issues"
-  },
-  "homepage": "https://github.com/sdwqdwd5/truck_sharing#readme",
   "dependencies": {
+    
     "body-parser": "^1.19.0",
     "ejs": "^3.1.3",
     "express": "^4.17.1"
