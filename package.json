@@ -8,8 +8,7 @@
     "start": "node app.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sdwqdwd5/truck_sharing.git"
+  
   },
   "author": "Chia-Hao Chan",
   "license": "ISC",
