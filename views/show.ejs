@@ -1,0 +1,25 @@
+<h1>
+	This is a show template 
+</h1>
+
+<div>
+	<p>
+		<%= truck.name %>
+	</p>
+	<p>
+		<img src="<%= truck.image %>">
+	</p>
+	<p>
+		<%= truck.description %>
+	</p>
+</div>
+<p>
+	
+<%truck.comments.forEach(function(comment){ %>
+	<p>
+		
+		<%=comment.author%>: <%=comment.text%>
+		
+	</p>
+<%});%>
+</p>
