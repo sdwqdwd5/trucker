@@ -6,7 +6,12 @@ var Truck = require("./models/trucks");
 var Comment = require("./models/comment");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + "/public"));
-mongoose.connect('mongodb://localhost:27017/trucker', {useNewUrlParser: true,useUnifiedTopology: true});
+
+// mongodb+srv://sdwqdwd5:vul3ejo3@trucker.vct86.mongodb.net/trucker?retryWrites=true&w=majority
+
+
+url = process.env.DATABASEURL || "mongodb://localhost:27017/trucker";
+mongoose.connect(url, {useNewUrlParser: true,useUnifiedTopology: true});
 app.set("view engine", "ejs");
 app.get("/", function(req,res){
 	res.render("landing");
