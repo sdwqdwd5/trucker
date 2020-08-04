@@ -41,12 +41,12 @@ app.get("/trucks", function(req,res){
 			// 	}
 			// })
 			console.log(allTrucks);
-			res.render("index", {trucks:allTrucks});		
+			res.render("trucks/index", {trucks:allTrucks});		
 		}
 	})
 });
 app.get("/trucks/new", function(req,res){
-	res.render("new");
+	res.render("trucks/new");
 });
 
 app.get("/trucks/:id", function(req,res){
@@ -54,7 +54,7 @@ app.get("/trucks/:id", function(req,res){
 		if (err){
 			console.log(err)
 		}else{
-			res.render("show", {truck: foundTruck});
+			res.render("trucks/show", {truck: foundTruck});
 		}
 	});
 });
@@ -73,6 +73,34 @@ app.post("/trucks", function(req,res){
 	
 	
 });
+app.get("/trucks/:id/comments/new", function(req,res){
+	Truck.findById(req.params.id, function(err,truck){
+		if (err){
+			console.log(err);
+		}else{
+			res.render("comments/new", {truck:truck});
+		}
+	})
+})
+app.post("/trucks/:id", function(req,res){
+	Truck.findById(req.params.id,function(err, truck){
+		if(err){
+			console.log(err);
+			res.redirect("/trucks");
+		}else{
+			Comment.create(req.body.comment, function(err, comment){
+				if(err){
+					console.log(err);
+				}else{
+					truck.comments.push(comment);
+					truck.save();
+					res.redirect("/trucks/"+truck._id);
+				}
+			})
+		}
+	});
+});
+
 app.listen(process.env.PORT||3000,function(){
 	console.log("server!!!!!!");
 });
