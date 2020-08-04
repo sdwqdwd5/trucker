@@ -10,7 +10,8 @@ app.use(express.static(__dirname + "/public"));
 // mongodb+srv://sdwqdwd5:vul3ejo3@trucker.vct86.mongodb.net/trucker?retryWrites=true&w=majority
 
 
-url = process.env.DATABASEURL ;
+var url = process.env.DATABASEURL ;
+console.log(process.env.DATABASEURL);
 mongoose.connect(url, {useNewUrlParser: true,useUnifiedTopology: true});
 app.set("view engine", "ejs");
 app.get("/", function(req,res){
