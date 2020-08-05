@@ -14,7 +14,7 @@ body{
     
 }
 
-.h1, h1{
+#title{
     font-weight: 600;
     font-size:7em;
     /* -webkit-text-stroke: 0.01em white; */
@@ -35,6 +35,7 @@ body{
     font-size: 1rem;
 }
 #indexCard {
+    max-width: 350px;
     margin-top: 10px;
     box-sizing: border-box;
     border-radius: 2px;

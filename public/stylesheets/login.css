@@ -1,3 +1,7 @@
 #formPage{
-    margin-top: 10%;
+    margin-top: 8em;
+}
+
+#formPage h1{
+    font-size: 3em;
 }

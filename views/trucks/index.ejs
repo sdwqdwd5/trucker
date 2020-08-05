@@ -6,7 +6,7 @@
 
 	<header class="jumbotron align-items-center d-flex">
 		<div class = "container text-center"id="JHead">
-			<h1>WELCOME TO TRUCKER</h1>
+			<h1 id="title">WELCOME TO TRUCKER</h1>
 			<p id="Jdescription">A PLACE TO SHARE / VIEW THE AMAZING TRUCKS </p>
 			<p>
 				<a class="btn btn-primary btn-lg btn-secondary" href="/trucks/new">add a new truck</a>
@@ -17,19 +17,20 @@
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 		
 		<% trucks.forEach(function(truck){ %>
-			<div class="col-lg-4 col-md-6 col-12">
-			<div class="card my-3"  id="indexCard">
-				<img class="card-image img-responsive" src="<%= truck.image%>" alt="Card image cap">
-				<div class="card-body">
-					<div class="caption">
-						<%= truck.name %>
+			<div class="col-xl-4 col-lg-6 col-12 justify-content-center d-flex">
+				<div class="card my-3"  id="indexCard">
+					<img class="card-image img-responsive" src="<%= truck.image%>" alt="Card image cap">
+					<div class="card-body">
+						<div class="caption">
+							<%= truck.name %>
+						</div>
+						<p>
+							<a class="btn btn-outline-dark mt-3 " href="/trucks/<%= truck._id %>"> More INFO</a>
+						</p>
 					</div>
-					<p>
-						<a class="btn btn-outline-dark mt-3 " href="/trucks/<%= truck._id %>"> More INFO</a>
-					</p>
 				</div>
-			  </div>
 			</div>
+			
 			
 		<% }); %>
 	</div>
