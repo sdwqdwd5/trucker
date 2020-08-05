@@ -1,13 +1,16 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var Truck = require("./models/trucks");
-var Comment = require("./models/comment");
-var passport   = require("passport");
-var LocalStrategy = require("passport-local");
-var User = require("./models/user");
-
+var express 		 = require("express"),
+	app 			 = express(),
+	bodyParser 		 = require("body-parser"),
+	mongoose 		 = require("mongoose"),
+	Truck			 = require("./models/truck"),
+	Comment			 = require("./models/comment"),
+	passport   		 = require("passport"),
+	LocalStrategy 	 = require("passport-local"),
+	User 			 = require("./models/user"),
+	commentRoutes    = require("./routes/comments"),
+ 	truckRoutes = require("./routes/trucks"),
+	indexRoutes      = require("./routes/index");
+	 
 app.use(require("express-session")({
 	secret:"CHIA",
 	resave: false,
@@ -30,134 +33,18 @@ var url = process.env.DATABASEURL ;
 mongoose.connect(url, {useNewUrlParser: true,useUnifiedTopology: true});
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
-app.get("/", function(req,res){
-	res.render("landing");
-});
-// var trucks = [
-// 		{name: "Truck with Crane", image: "https://i.ibb.co/grP13Wb/truck-with-crane.jpg", description:"HI"},
-// 		{name: "Truck with Rock", image: "https://i.ibb.co/D4HLWMp/truck-with-rock.jpg", description:"HI"},
-// 		{name: "Truck with excavator", image:"https://i.ibb.co/cy0P8X8/trucks-with-excavator.jpg", description:"HI"}
-// 	]
+
+
 
 app.use(function(req,res,next){
 	res.locals.currentUser = req.user;
 	next();
 });
 
-app.get("/trucks", function(req,res){
-	Truck.find({}, function(err, allTrucks){
-		if(err){
-			console.log(err);
-		}else{
-			// var newComment = {author:"PETER", text:"AOAOOAOAOAOAOAOAO"}
-			// Comment.create(newComment, function(err, newlyComment){
-			// 	if(err){
-			// 		console.log(err)
-			// 	}else{
-			// 		allTrucks.forEach(function(truck){
-			// 			truck.comments.push(newlyComment);
-			// 			truck.save();
-			// 		})
-			// 	}
-			// })
-			console.log(allTrucks);
-			res.render("trucks/index", {trucks:allTrucks});		
-		}
-	})
-});
-app.get("/trucks/new",isLoggedIn, function(req,res){
-	res.render("trucks/new");
-});
+app.use("/trucks", truckRoutes); //common route
+app.use("/trucks/:id/comments", commentRoutes);
+app.use(indexRoutes);
 
-app.get("/trucks/:id", function(req,res){
-	Truck.findById(req.params.id).populate("comments").exec( function(err, foundTruck){
-		if (err){
-			console.log(err)
-		}else{
-			res.render("trucks/show", {truck: foundTruck});
-		}
-	});
-});
-app.post("/trucks",isLoggedIn, function(req,res){
-	var name = req.body.name;
-	var image = req.body.image;
-	var description = req.body.description;
-	var newTruck = {name:name, image:image, description:description};
-	Truck.create(newTruck, function(err, newlyCreateTruck){
-		if(err){
-			console.log(err);
-		}else{
-			res.redirect("/trucks");	
-		}
-	})
-	
-	
-});
-app.get("/trucks/:id/comments/new", function(req,res){
-	Truck.findById(req.params.id, function(err,truck){
-		if (err){
-			console.log(err);
-		}else{
-			res.render("comments/new", {truck:truck});
-		}
-	})
-})
-app.post("/trucks/:id", isLoggedIn, function(req,res){
-	Truck.findById(req.params.id,function(err, truck){
-		if(err){
-			console.log(err);
-			res.redirect("/trucks");
-		}else{
-			Comment.create(req.body.comment, function(err, comment){
-				if(err){
-					console.log(err);
-				}else{
-					truck.comments.push(comment);
-					truck.save();
-					res.redirect("/trucks/"+truck._id);
-				}
-			})
-		}
-	});
-});
-app.get("/register", function(req,res){
-	res.render("register");
-})
-
-app.post("/register", function(req,res){
-	User.register(new User({username:req.body.username}), req.body.password, function(err, user){
-		if(err){
-			console.log(err);
-			return res.render("register")
-		}
-		passport.authenticate("local")(req,res,function(){
-			res.redirect("/trucks");
-		})
-	})
-});
-
-app.get("/login", function(req,res){
-	res.render("login");
-})
-
-app.post("/login", passport.authenticate("local",{
-	successRedirect:"/trucks",
-	failureRedirect:"/login"
-}), function(req,res){
-		
-})
-
-app.get("/logout", function(req,res){
-	req.logout();
-	res.redirect("/trucks");
-})
-
-function isLoggedIn(req,res,next){
-	if(req.isAuthenticated()){
-		return next();
-	}
-	res.redirect("/login");
-}
 app.listen(process.env.PORT||3000,function(){
 	console.log("server!!!!!!");
 });
