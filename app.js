@@ -4,6 +4,21 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Truck = require("./models/trucks");
 var Comment = require("./models/comment");
+var passport   = require("passport");
+var LocalStrategy = require("passport-local");
+var User = require("./models/user");
+
+app.use(require("express-session")({
+	secret:"CHIA",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + "/public"));
 
@@ -11,8 +26,9 @@ app.use(express.static(__dirname + "/public"));
 
 
 var url = process.env.DATABASEURL ;
-console.log(process.env.DATABASEURL);
+
 mongoose.connect(url, {useNewUrlParser: true,useUnifiedTopology: true});
+app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.get("/", function(req,res){
 	res.render("landing");
@@ -23,6 +39,10 @@ app.get("/", function(req,res){
 // 		{name: "Truck with excavator", image:"https://i.ibb.co/cy0P8X8/trucks-with-excavator.jpg", description:"HI"}
 // 	]
 
+app.use(function(req,res,next){
+	res.locals.currentUser = req.user;
+	next();
+});
 
 app.get("/trucks", function(req,res){
 	Truck.find({}, function(err, allTrucks){
@@ -45,7 +65,7 @@ app.get("/trucks", function(req,res){
 		}
 	})
 });
-app.get("/trucks/new", function(req,res){
+app.get("/trucks/new",isLoggedIn, function(req,res){
 	res.render("trucks/new");
 });
 
@@ -58,7 +78,7 @@ app.get("/trucks/:id", function(req,res){
 		}
 	});
 });
-app.post("/trucks", function(req,res){
+app.post("/trucks",isLoggedIn, function(req,res){
 	var name = req.body.name;
 	var image = req.body.image;
 	var description = req.body.description;
@@ -82,7 +102,7 @@ app.get("/trucks/:id/comments/new", function(req,res){
 		}
 	})
 })
-app.post("/trucks/:id", function(req,res){
+app.post("/trucks/:id", isLoggedIn, function(req,res){
 	Truck.findById(req.params.id,function(err, truck){
 		if(err){
 			console.log(err);
@@ -100,7 +120,44 @@ app.post("/trucks/:id", function(req,res){
 		}
 	});
 });
+app.get("/register", function(req,res){
+	res.render("register");
+})
 
+app.post("/register", function(req,res){
+	User.register(new User({username:req.body.username}), req.body.password, function(err, user){
+		if(err){
+			console.log(err);
+			return res.render("register")
+		}
+		passport.authenticate("local")(req,res,function(){
+			res.redirect("/trucks");
+		})
+	})
+});
+
+app.get("/login", function(req,res){
+	res.render("login");
+})
+
+app.post("/login", passport.authenticate("local",{
+	successRedirect:"/trucks",
+	failureRedirect:"/login"
+}), function(req,res){
+		
+})
+
+app.get("/logout", function(req,res){
+	req.logout();
+	res.redirect("/trucks");
+})
+
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+}
 app.listen(process.env.PORT||3000,function(){
 	console.log("server!!!!!!");
 });
