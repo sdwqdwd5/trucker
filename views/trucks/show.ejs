@@ -11,8 +11,11 @@
 					<h4 class=" d-inline">
 						<a href="#"><%= truck.name%></a>
 					</h4>
-					<p class="my-3">
+					<p class="my-3" style="font-size: 1.5em;">
 						<%= truck.description %>
+					</p>
+					<p>
+						<p class="attribution" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at 14:23pm, 4 Dec 2015</p>
 					</p>
 				</div>
 			  <hr class="mt-0">
@@ -27,13 +30,13 @@
 						<div class="text mr-3">
 						<p><%=comment.text%></p>
 						</div>
-						<p class="attribution">by <a href="#non"><%=comment.author%></a> at 14:23pm, 4 Dec 2015</p>
+						<p class="attribution">by <a href="#non"><%=comment.author.username%></a> at 14:23pm, 4 Dec 2015</p>
 					</div>
 					</article>
 				<%});%>
 				
 			</div>
-			<form action="/trucks/<%= truck._id%>" method="POST">
+			<form action="/trucks/<%= truck._id%>/comments" method="POST">
 				<div class="input-group input-group-sm chatMessageControls">
 					<span class="input-group-addon" id="sizing-addon3">Comment</span>
 					<input type="text" name="comment[text]" class="form-control" placeholder="Type your message here.." aria-describedby="sizing-addon3"> 

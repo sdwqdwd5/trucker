@@ -4,7 +4,7 @@ var Truck = require("../models/truck");
 var Comment = require("../models/comment");
 
 
-router.post("/trucks/:id", isLoggedIn, function(req,res){
+router.post("/", isLoggedIn, function(req,res){
 	Truck.findById(req.params.id,function(err, truck){
 		if(err){
 			console.log(err);
@@ -14,6 +14,9 @@ router.post("/trucks/:id", isLoggedIn, function(req,res){
 				if(err){
 					console.log(err);
 				}else{
+                    comment.author.id = req.user._id;
+					comment.author.username = req.user.username;
+					comment.save();
 					truck.comments.push(comment);
 					truck.save();
 					res.redirect("/trucks/"+truck._id);
