@@ -58,7 +58,7 @@ body{
 
 .comment {
     overflow: hidden;
-    padding: 0 0 1em;
+    
     border-bottom: 1px solid #ddd;
     margin: 0 0 1em;
     *zoom: 1;
@@ -211,3 +211,19 @@ hr:after {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+
+
+  #delete{
+    max-width:14px ;
+    max-height:14px;
+  }
+
+  #edit{
+    max-width:14px ;
+    max-height:14px;
+  }
+
+  #truckText{
+      height: 150px;
+  }

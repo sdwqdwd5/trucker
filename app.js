@@ -9,15 +9,19 @@ var express 		 = require("express"),
 	User 			 = require("./models/user"),
 	commentRoutes    = require("./routes/comments"),
  	truckRoutes = require("./routes/trucks"),
-	indexRoutes      = require("./routes/index");
-	 
+	indexRoutes      = require("./routes/index"),
+	methodOverride   = require("method-override");
+	
 app.use(require("express-session")({
 	secret:"CHIA",
-	resave: false,
+	resave:	 false, 
 	saveUninitialized: false
 }));
+
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride("_method"));
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
