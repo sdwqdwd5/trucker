@@ -2,10 +2,10 @@ var express =require("express");
 var router = express.Router({mergeParams: true});
 var Truck = require("../models/truck");
 var Comment = require("../models/comment");
+var middlewareObj = require("../middleware")
 
 
-
-router.post("/", isLoggedIn, function(req,res){
+router.post("/", middlewareObj.isLoggedIn, function(req,res){
 	Truck.findById(req.params.id,function(err, truck){
 		if(err){
 			console.log(err);
@@ -13,6 +13,7 @@ router.post("/", isLoggedIn, function(req,res){
 		}else{
 			Comment.create(req.body.comment, function(err, comment){
 				if(err){
+					req.flash("error", "Cannot find id: '" + req.params.id + "' truck");
 					console.log(err);
 				}else{
                     comment.author.id = req.user._id;
@@ -20,56 +21,38 @@ router.post("/", isLoggedIn, function(req,res){
 					comment.save();
 					truck.comments.push(comment);
 					truck.save();
+					req.flash("success", "Comment created!");
 					res.redirect("/trucks/"+truck._id);
 				}
 			})
 		}
 	});
 });
-router.put("/:comment_id", checkUser, function(req,res){
+router.put("/:comment_id", middlewareObj.checkCommentUser, function(req,res){
 	
 	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
 		if(err){
+			req.flash("error","Cannot find id:" + req.params.comment_id +"comment");
 			res.redirect("/trucks")
 		}else{
+			req.flash("success", "Comment updated!");
 			res.redirect("/trucks/" + req.params.id);
 		}
 	} )
 })
 
-router.delete("/:comment_id",checkUser, function(req,res){
+router.delete("/:comment_id", middlewareObj.checkCommentUser, function(req,res){
 	Comment.findByIdAndRemove(req.params.comment_id, function(err){
 		if(err){
-			res.redirect("/trucks");
+			req.flash("error","Cannot find id:" + req.params.comment_id +"comment");
+			res.redirect("/trucks" + req.params.id);
 		}else{
 			console.log(req.params.id);
+			req.flash("success", "Comment deleted");
 			res.redirect("/trucks/" + req.params.id);
 		}
 	})
 })
-function isLoggedIn(req,res,next){
-	if(req.isAuthenticated()){
-		return next();
-	}
-	res.redirect("/login");
-}
-function checkUser(req,res,next){
-	if(req.isAuthenticated()){
-		Comment.findById(req.params.comment_id,function(err,foundComment){
-			if(err){
-				res.redirect("back")
-			}else{
-				if(foundComment.author.id == req.user.id){
-					next();
-				}else{
-					res.redirect("back")
-				}
-				
-			}
-		})
-	
-	}else{
-		res.redirect("/login")
-	}
-}
+
+
 module.exports = router;

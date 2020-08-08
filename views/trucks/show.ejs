@@ -26,23 +26,25 @@
 					<p id="truckDes" class="my-3" style="font-size: 1.5em;">
 						<%= truck.description %>
 					</p>
-					<p>
-						<p class="attribution" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at 14:23pm, 4 Dec 2015</p>
-					</p>
-					<% if (currentUser && truck.author.id.equals(currentUser._id)){%>
-						<div class="d-inline-block d-flex  mt-1 mb-1">
-							<form action="/trucks/<%=truck._id%>?_method=DELETE" method="POST" class=" m-0 col-3 ">
-	
-										<button class="btn btn-danger btn-sm ">
-											<i class="fas fa-trash-alt" id="delete"></i>
-										</button>
-							</form>
-							<div class="col-3">
-								<a class="btn btn-sm btn-warning mx-1" id="editTruckBtn"><i class="fas fa-edit" id="edit"></i></a>
+					<div class="row align-items-center">
+						<p>
+							<p class="attribution d-inline mb-0" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at 14:23pm, 4 Dec 2015</p>
+						</p>
+						<% if (currentUser && truck.author.id.equals(currentUser._id)){%>
+							<div class="d-inline d-flex  mt-1 mb-1">
+								<form action="/trucks/<%=truck._id%>?_method=DELETE" method="POST" class=" m-0 col-1 ">
+		
+											<button class="btn btn-danger btn-sm ">
+												<i class="fas fa-trash-alt" id="delete"></i>
+											</button>
+								</form>
+								<div class="d-inline col-1">
+									<a class="btn btn-sm btn-warning mx-1" id="editTruckBtn"><i class="fas fa-edit" id="edit"></i></a>
+								</div>
+								
 							</div>
-							
-						</div>
 						<%}%>
+					</div>
 				</div>
 			  <hr class="mt-0">
 			  <section class="comments">

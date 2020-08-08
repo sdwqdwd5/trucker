@@ -20,7 +20,7 @@
            
                 <div class ="navbar-header">
                     <a class="navbar-brand" href="/">
-                        <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-truck-flatbed pb-2 m-0" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-truck-flatbed  " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M11 5h2.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5h-1v-1h1a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4.5h-1V5zm-8 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
                             <path fill-rule="evenodd" d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
                             <path d="M0 10h11v2H4.5v-1h-3v1H1a1 1 0 0 1-1-1v-1zm11-6a1 1 0 0 1 1 1v6h-1V4z"/>
@@ -28,11 +28,23 @@
                         Trucker
                     </a>
                 </div>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                     <ul class = "navbar-nav ml-auto">
+                    <div class="navbar-nav mx-auto text-center">
+                        <% if (error && error.length > 0){%>
+                                <span id="error"><%= error %></span>
+                            </div>
+                        <%}%>
+                        <% if (success && success.length > 0) {%>
+                            
+                                <span id="success"><%= success %></span>
+                            </div>	
+                        <%}%>
+                        </div>
+                     <ul class = "navbar-nav ml-auto"
                         <% if (!currentUser){%>
                             <li class="nav-item">
                                 <a class="nav-link" href="/login">Login</a>
@@ -48,6 +60,18 @@
                          <% } %>
                     </ul>
                 </div>
-           
         </nav>
-       
+        <!-- <div class="container mt-4">
+            <% if (error && error.length > 0){%>
+                <div class="alert alert-danger font-weight-bold" role="alert">
+                    <%= error %>
+                </div>
+            <%}%>
+            <% if (success && success.length > 0) {%>
+                <div class="alert alert-success font-weight-bold" role="alert">
+                    <%= success %>
+                </div>	
+            <%}%>
+        </div>
+    
+        -->

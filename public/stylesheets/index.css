@@ -227,3 +227,28 @@ hr:after {
   #truckText{
       height: 150px;
   }
+
+  #error{
+      font-weight: 400;
+      font-size: 1.5em;
+      color: red;
+  }
+  
+  #success{
+    font-weight: 400;
+    font-size: 1.5em;
+    color: rgb(6, 189, 6);
+}
+
+.navbar-nav {
+    font-size: 1.3em;
+}
+
+.navbar-header .navbar-brand{
+    font-size: 1.9em;
+    font-weight: 600;
+}
+
+ .navbar-brand svg{
+    padding-bottom: 0.75rem;
+}
