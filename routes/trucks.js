@@ -3,17 +3,7 @@ var router = express.Router();
 var Truck = require("../models/truck");
 var middlewareObj = require("../middleware")
 
-router.get("/", function(req,res){
-	Truck.find({}, function(err, allTrucks){
-		if(err){
-			console.log(err);
-		}else{
-			console.log(allTrucks);
-			
-			res.render("trucks/index", {trucks:allTrucks});		
-		}
-	})
-});
+
 
 router.get("/new",middlewareObj.isLoggedIn, function(req,res){
 	res.render("trucks/new");
@@ -46,7 +36,7 @@ router.post("/",middlewareObj.isLoggedIn, function(req,res){
 			console.log(err);
 		}else{
 			req.flash("success", "A new truck created!");
-			res.redirect("/trucks");	
+			res.redirect("/");	
 		}
 	})	
 });
@@ -55,7 +45,7 @@ router.get("/:id/edit",middlewareObj.checkTruckUser,function(req,res){
 	Truck.findById(req.params.id,function(err,foundTruck){
 		if(err){
 			req.flash("error", "Cannot find id:" + req.params.id +"truck");
-			res.redirect("/trucks")
+			res.redirect("/")
 		}else{
 			res.render("trucks/edit", {truck: foundTruck});
 		}
@@ -67,7 +57,7 @@ router.put("/:id",middlewareObj.checkTruckUser, function(req,res){
 Truck.findByIdAndUpdate(req.params.id, req.body.truck, function(err, updatedTruck){
 	if(err){
 		req.flash("error", "Cannot find id:" + req.params.id +"truck");
-		res.redirect("/trucks")
+		res.redirect("/")
 	}else{
 		req.flash("success", "Truck updated!");
 		res.redirect("/trucks/" + req.params.id);
@@ -79,10 +69,10 @@ router.delete("/:id",middlewareObj.checkTruckUser, function(req,res){
 Truck.findByIdAndRemove(req.params.id, function(err){
 	if(err){
 		req.flash("error", "Cannot find id:" + req.params.id +"truck");
-		res.redirect("/trucks");
+		res.redirect("/");
 	}else{
 		req.flash("success", "Truck deleted!");
-		res.redirect("/trucks");
+		res.redirect("/");
 	}
 })
 })

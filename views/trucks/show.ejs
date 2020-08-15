@@ -28,7 +28,7 @@
 					</p>
 					<div class="row align-items-center">
 						<p>
-							<p class="attribution d-inline mb-0" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at 14:23pm, 4 Dec 2015</p>
+							<p class="attribution d-inline mb-0" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at <%= moment(truck.createdAt).fromNow() %></p>
 						</p>
 						<% if (currentUser && truck.author.id.equals(currentUser._id)){%>
 							<div class="d-inline d-flex  mt-1 mb-1">
@@ -71,7 +71,7 @@
 						<p class="" id="comment"><%=comment.text%></p>
 						</div>
 						<div class="row d-flex">
-							<p class="attribution d-inline-block">by <a href="#non"><%=comment.author.username%></a> at 14:23pm, 4 Dec 2015</p>
+							<p class="attribution d-inline-block">by <a href="#non"><%=comment.author.username%></a> at <%= moment(comment.createdAt).fromNow()%></p>
 							<% if (currentUser && comment.author.id.equals(currentUser._id)){%>
 							<div class="d-inline-block d-flex  mt-1 mb-1">
 								<form action="/trucks/<%=truck._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST" class=" m-0 col-3 ">

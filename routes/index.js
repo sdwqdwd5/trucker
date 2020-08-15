@@ -2,10 +2,19 @@ var express =require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user")
+var Truck = require("../models/truck");
 
-var num = 0;
+
 router.get("/", function(req,res){
-	res.render("landing");
+	Truck.find({}, function(err, allTrucks){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(allTrucks);
+			
+			res.render("trucks/index", {trucks:allTrucks});		
+		}
+	})
 });
 
 router.get("/register", function(req,res){
@@ -21,8 +30,8 @@ router.post("/register", function(req,res){
 			return res.redirect("register");
 		}
 		passport.authenticate("local")(req,res,function(){
-			req.flash("success", "Welcome new user" + req.body.username +"!")
-			res.redirect("/trucks");
+			req.flash("success", "Welcome new user" +" "+ req.body.username +"!")
+			res.redirect("/");
 		})
 	})
 });
@@ -32,7 +41,7 @@ router.get("/login", function(req,res){
 })
 
 router.post("/login", passport.authenticate("local",{
-	successRedirect:"/trucks",
+	successRedirect:"/",
 	failureRedirect:"/login",
 	failureFlash : true 
 }), function(req,res){
@@ -42,7 +51,7 @@ router.post("/login", passport.authenticate("local",{
 router.get("/logout", function(req,res){
 	req.flash("success", "Successfully Log Out!");
 	req.logout();
-	res.redirect("/trucks");
+	res.redirect("/");
 })
 
 

@@ -9,7 +9,7 @@ router.post("/", middlewareObj.isLoggedIn, function(req,res){
 	Truck.findById(req.params.id,function(err, truck){
 		if(err){
 			console.log(err);
-			res.redirect("/trucks");
+			res.redirect("/");
 		}else{
 			Comment.create(req.body.comment, function(err, comment){
 				if(err){
@@ -33,7 +33,7 @@ router.put("/:comment_id", middlewareObj.checkCommentUser, function(req,res){
 	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
 		if(err){
 			req.flash("error","Cannot find id:" + req.params.comment_id +"comment");
-			res.redirect("/trucks")
+			res.redirect("/")
 		}else{
 			req.flash("success", "Comment updated!");
 			res.redirect("/trucks/" + req.params.id);
