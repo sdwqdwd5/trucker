@@ -9,7 +9,9 @@
 
 .comment-img {
     float: left;
-    margin-right: 33px;
+    margin-left: 16px;
+    margin-right: 18px;
+    margin-top: 8px;
     border-radius: 5px;
     overflow: hidden;
 }
@@ -153,4 +155,12 @@ hr:after {
     background-color: #eee;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+.far{
+    width: 50px;
+    height: 50px;
+    font-size: 2.8em; 
+    font-weight: 200; 
+    color: lightslategray;
+
 }
