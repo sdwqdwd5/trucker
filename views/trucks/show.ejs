@@ -26,10 +26,11 @@
 					<p id="truckDes" class="my-3" style="font-size: 1.5em;">
 						<%= truck.description %>
 					</p>
+					<p>
+						<p class="attribution d-inline mb-0" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at <%= moment(truck.createdAt).fromNow() %></p>
+					</p>
 					<div class="row align-items-center">
-						<p>
-							<p class="attribution d-inline mb-0" style="font-size: 1.2em;">Author: <a href="#non"><%=truck.author.username%></a> at <%= moment(truck.createdAt).fromNow() %></p>
-						</p>
+						
 						<% if (currentUser && truck.author.id.equals(currentUser._id)){%>
 							<div class="d-inline d-flex  mt-1 mb-1">
 								<form action="/trucks/<%=truck._id%>?_method=DELETE" method="POST" class=" m-0 col-1 ">
