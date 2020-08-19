@@ -16,7 +16,7 @@
 	<div class="container">
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 		
-		<% trucks.forEach(function(truck){ %>
+		<% trucks.reverse().forEach(function(truck){ %>
 			<div class="col-xl-4 col-lg-6 col-12 justify-content-center d-flex">
 				<div class="card my-3"  id="indexCard">
 					<img class="card-image img-responsive" src="<%= truck.image%>" alt="Card image cap">
